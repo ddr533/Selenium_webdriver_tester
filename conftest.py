@@ -4,7 +4,7 @@ import pytest
 from selenium.webdriver.chrome.options import Options #Добавляем класс Option
 
 def pytest_addoption(parser): #встроенная функция для добавления опций в командную строку для pytest
-    parser.addoption('--browser_name', action='store', default=None, help="Choose browser: chrome or firefox") #опция выбора браузера для теста --browser_name=firefox или --browser_name=chrome
+    parser.addoption('--browser_name', action='store', default='chrome', help="Choose browser: chrome or firefox") #опция выбора браузера для теста --browser_name=firefox или --browser_name=chrome
     parser.addoption('--language', action='store', default='ru', help="Choose languege: ru or en") #добавляем выбор языка
 
 
