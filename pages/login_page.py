@@ -9,7 +9,6 @@ class LoginPage(BasePage):
 
     def should_be_login_url(self):
         #проверка нахождения на странице с логином
-        print(self.browser.current_url)
         assert 'login' in self.browser.current_url, "Not at login_page"
 
     def should_be_login_form(self):

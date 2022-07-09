@@ -17,6 +17,7 @@ def browser(request):
     if browser_name=="chrome":
         print("\nstart chrome browser for test..")
         options = Options()
+        options.add_experimental_option('excludeSwitches', ['enable-logging']) #очистка вывода от сообщений USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection:
         options.add_experimental_option('prefs', {'intl.accept_languages': user_language}) #передаем язык в Хром
         browser=webdriver.Chrome(options=options)
     elif browser_name == "firefox":
