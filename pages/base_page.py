@@ -1,6 +1,9 @@
 #Создаем базовую страницу, с которой будут унаследоваться все остальные классы
 from selenium.common.exceptions import NoSuchElementException  #импортируем имя для except
 from selenium.common.exceptions import NoAlertPresentException #исключение для solve_quiz_and_get_code
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 import math
 
 class BasePage():
@@ -16,6 +19,19 @@ class BasePage():
             self.browser.find_element(how,what)
         except (NoSuchElementException):
             return False
+        return True
+    def is_not_element_present(self, how, what, timeout=4): #проверка на ОТСУТСВИЕ элемента на странице
+        try:
+            WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located((how, what)))
+        except TimeoutException:
+            return True
+        return False
+    def is_disappeared(self, how, what, timeout=4): #проверка на исчезание элемента
+        try:
+            WebDriverWait(self.browser, timeout, 1, TimeoutException).until_not(EC.presence_of_element_located((how, what)))
+        except TimeoutException:
+            return False
+
         return True
     def solve_quiz_and_get_code(self):
         alert = self.browser.switch_to.alert
