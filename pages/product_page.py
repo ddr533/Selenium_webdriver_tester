@@ -10,7 +10,7 @@ class ProductPage(BasePage):
     def should_name_of_product_in_message(self):
         product_name=self.browser.find_element(*ProductPageLocators.PRODUCT_NAME).text
         text_in_message_about_adding=self.browser.find_element(*ProductPageLocators.MESSAGE_ABOUT_ADDING).text
-        assert  product_name in text_in_message_about_adding, 'Product_name not in Message_about_adding'
+        assert  product_name==text_in_message_about_adding, 'Product_name not in Message_about_adding'
     def should_be_message_about_basket_total(self):
         assert self.is_element_present(*ProductPageLocators.MESSAGE_OF_TOTAL_COST_OF_BASKET), 'Message about total cost of basket doesnt exist'
     def product_price_in_basket_total_message(self):
