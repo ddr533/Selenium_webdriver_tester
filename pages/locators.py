@@ -3,7 +3,7 @@ class MainPageLocators():
     LOGIN_LINK=(By.CSS_SELECTOR,"#login_link")
 class LoginPageLocators:
     REGISTRATION_FORM=(By.CSS_SELECTOR,'#register_form')
-    LOGIN_FORM=(By.CSS_SELECTOR,'#login_form')
+    LOGIN_FORM=(By.CSS_SELECTOR,'#login1_form')
 class ProductPageLocators:
     BASKET=(By.CSS_SELECTOR,'[class="btn btn-lg btn-primary btn-add-to-basket"]')
     PRODUCT_NAME=(By.CSS_SELECTOR,'.product_main h1')
