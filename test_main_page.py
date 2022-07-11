@@ -3,7 +3,7 @@ import pytest
 from .pages.main_page import MainPage
 from .pages.login_page import LoginPage #для перехода с main_page на login_page
 import time
-#@pytest.mark.skip
+
 @pytest.mark.login_guest #можно запустить только тесты в классе, используя метку -m login_guest
 class TestLoginFromMainPage(): #Объеденили в класс несколько тестов, связанных с одним элементом сайта
     def test_guest_can_go_to_login_page(self,browser):
