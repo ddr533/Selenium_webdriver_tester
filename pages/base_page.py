@@ -25,12 +25,16 @@ class BasePage():
             return True
     def should_be_login_link(self):
         assert self.is_element_present(*BasePageLocators.LOGIN_LINK), 'Loging Link is not present'
+
     def is_element_present(self,how,what): #реализуем метод поиска элемента, в котором будем перехватывать исключения
         try:
             self.browser.find_element(how,what)
         except (NoSuchElementException):
             return False
         return True
+    def go_to_basket(self):
+        self.browser.find_element(*BasePageLocators.BASKET).click()
+
     def is_not_element_present(self, how, what, timeout=4): #проверка на ОТСУТСВИЕ элемента на странице
         try:
             WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located((how, what)))

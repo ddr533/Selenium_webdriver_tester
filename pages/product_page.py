@@ -3,14 +3,14 @@ from .locators import ProductPageLocators
 
 class ProductPage(BasePage):
     def user_can_add_product_to_basket(self):
-        self.go_to_basket() #переход в корзину
+        self.add_to_basket() #добавляем в корзину
         self.solve_quiz_and_get_code() #решаем задачу в алерте
         self.should_be_message_about_adding_product() #проверяем сообщение о добавлении товара в корзину
         self.should_be_message_about_basket_total() #проверяем сообщение о стоимсти корзины
         self.should_name_of_product_in_message() #проверяем имя товара в корзине
         self.product_price_in_basket_total_message() #проверяем цену товара в корзине
-    def go_to_basket(self):
-        go_to_basket=self.browser.find_element(*ProductPageLocators.BASKET).click()
+    def add_to_basket(self):
+        go_to_basket=self.browser.find_element(*ProductPageLocators.ADD_TO_BASKET).click()
     def should_be_message_about_adding_product(self):
         assert self.is_element_present(*ProductPageLocators.MESSAGE_ABOUT_ADDING), 'Message about adding is not present'
     def should_name_of_product_in_message(self):

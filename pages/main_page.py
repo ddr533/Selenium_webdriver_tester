@@ -5,7 +5,7 @@ from selenium.common.exceptions import NoAlertPresentException
 class MainPage(BasePage):
     def __init__(self, *args, **kwargs):
         super(MainPage, self).__init__(*args, **kwargs)
-# Как вы уже знаете, метод __init__ вызывается при создании объекта.
+# Метод __init__ вызывается при создании объекта.
 # Конструктор выше с ключевым словом super вызывает конструктор класса предка (Base Page)
 # и передает ему все те аргументы, которые мы передали в конструктор MainPage.
 
