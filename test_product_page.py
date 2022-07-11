@@ -1,9 +1,11 @@
 from .pages.product_page import ProductPage
 from .pages.basket_page import BasketPage
+from .pages.login_page import LoginPage
 import pytest
 import time
+
 @pytest.mark.skip
-def test_user_can_add_product_to_basket(browser): #ключевое слово test позволяет pytest подхватить переменную browser из conftest.py
+def test_guest_can_add_product_to_basket(browser): #ключевое слово test позволяет pytest подхватить переменную browser из conftest.py
     link = "http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209/?promo=newYear"
     page=ProductPage(browser,link) #создаем экземпляр класса ProductPage и передаем browser (из conftest.py),link в класс BasePage
     page.open() #используем метод open из BasePage для открытия страницы в созданном экземпляре теста
@@ -62,6 +64,29 @@ def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
     basket_page=BasketPage(browser,browser.current_url)
     basket_page.user_can_see_message_about_empty_basket()
     basket_page.is_items_in_basket()
+
+class TestUserAddToBasketFromProductPage:
+    @pytest.fixture(scope='function',autouse=True) #перед каждым тестом будет регистрировать пользователя
+    def setup(self,browser):
+        self.link='http://selenium1py.pythonanywhere.com/'
+        self.page=LoginPage(browser,self.link)
+        self.page.open()
+        email=str(time.time()) + "@fakemails.org"
+        password=str(time.time())
+        self.page.register_new_user(email,password)
+        self.page.should_be_authorized_user()
+
+    def test_user_cant_see_success_message(self,browser):  # отрицательный тест "чего не должно быть на странице"
+        self.link = 'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/'
+        self.page = ProductPage(browser, self.link)
+        self.page.open()
+        self.page.guest_cant_see_success_message()
+    def test_user_can_add_product_to_basket(self,browser):
+        self.link = "http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209/?promo=newYear"
+        page = ProductPage(browser,self.link)
+        page.open()
+        page.user_can_add_product_to_basket()
+
 
 # @pytest.mark.parametrize('promo_offer', [pytest.param(i, marks=pytest.mark.xfail(i==?, reason='')) for i in range(10)])
 # def test_guest_can_add_product_to_basket(browser, promo_offer):
