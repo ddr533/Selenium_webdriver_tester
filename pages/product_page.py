@@ -25,7 +25,7 @@ class ProductPage(BasePage):
         assert  product_price in price_in_basket, 'Product price not in total basket cost message'
 
     def guest_cant_see_success_message_after_adding_product_to_basket(self):
-        self.browser.find_element(*ProductPageLocators.BASKET).click()
+        self.browser.find_element(*ProductPageLocators.ADD_TO_BASKET).click()
         assert self.is_not_element_present(*ProductPageLocators.MESSAGE_ABOUT_ADDING), 'Message about adding present but shound not be'
     def guest_cant_see_success_message(self):
         assert self.is_not_element_present(*ProductPageLocators.MESSAGE_ABOUT_ADDING), 'Success message but shound not be'

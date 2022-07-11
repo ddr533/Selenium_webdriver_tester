@@ -20,13 +20,13 @@ def test_user_can_add_product_to_basket_for_few_links(browser,links): #тест 
     page.open()
     page.user_can_add_product_to_basket()
 @pytest.mark.skip
-@pytest.mark.xfail #помечаем ссылку с провальным тестом как XFAIL
+@pytest.mark.xfail
+#помечаем ссылку с провальным тестом как XFAIL
 def test_guest_cant_see_success_message_after_adding_product_to_basket(browser): #отрицательный тест "чего не должно быть на странице"
     link='http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/'
     page = ProductPage(browser,link)
     page.open()
     page.guest_cant_see_success_message_after_adding_product_to_basket()
-@pytest.mark.skip
 @pytest.mark.skip
 def test_guest_cant_see_success_message(browser): #отрицательный тест "чего не должно быть на странице"
     link = 'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/'
@@ -39,7 +39,7 @@ def test_message_disappeared_after_adding_product_to_basket(browser): #тест 
     link = 'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/'
     page = ProductPage(browser, link)
     page.open()
-    page.go_to_basket()
+    page.add_to_basket()
     page.message_disappeared_after_adding_product_to_basket()
 @pytest.mark.skip
 def test_guest_should_see_login_link_on_product_page(browser):
@@ -53,7 +53,7 @@ def test_guest_can_go_to_login_page_from_product_page(browser):
     page=ProductPage(browser,link)
     page.open()
     page.go_to_login_page()
-
+@pytest.mark.skip
 def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
     link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
     page=ProductPage(browser,link)
