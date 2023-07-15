@@ -1,57 +1,62 @@
-#в классе BasePage технические детали — реализация поиска элементов, метод для открытия страницы и прохождения капчи
-# C BasePage будут унаследовать методы другие страницы
-from selenium.common.exceptions import NoSuchElementException  #импортируем имя для except
-from selenium.common.exceptions import NoAlertPresentException #исключение для solve_quiz_and_get_code
-from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
-from .locators import BasePageLocators
 import math
 
-class BasePage():
-    # описываем методы взаимодействия с драйвером
-    def __init__(self, browser, url): #добавим конструктор — метод, который вызывается, когда мы создаем объект. Конструктор объявляется ключевым словом __init__
+from selenium.common.exceptions import (NoAlertPresentException,
+                                        NoSuchElementException,
+                                        TimeoutException)
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+
+from .locators import BasePageLocators
+
+
+class BasePage:
+    """Основные методы для работы со страницами сайта."""
+
+    def __init__(self, browser, url, timeout=10):
         self.browser = browser
         self.url = url
-        self.browser.implicitly_wait(10) #добавим команду для неявного ожидания со значением по умолчанию в 10
-    def open(self): #заходим на страницу
-        self.browser.get(self.url)
-    def go_to_login_page(self): #В аргументы больше не надо передавать экземпляр браузера, мы его передаем и сохраняем на этапе создания Page Object. Вместо него нужно указать аргумент self , чтобы иметь доступ к атрибутам и методам класса
-        self.browser.find_element(*BasePageLocators.LOGIN_LINK).click() #символ указывает на то, что мы передали именно пару, и этот кортеж нужно распаковать.
-        try: #принять алерт, если он есть
-            alert = self.browser.switch_to.alert
-            alert.accept()
-        except (NoAlertPresentException):
-            return True
-    def should_be_login_link(self):
-        assert self.is_element_present(*BasePageLocators.LOGIN_LINK), 'Loging Link is not present'
+        # Явное ожидание появления элемента в течение 10 секунд.
+        self.browser.implicitly_wait(timeout)
 
-    def is_element_present(self,how,what): #реализуем метод поиска элемента, в котором будем перехватывать исключения
+    def open(self):
+        """Переход по ссылке."""
+        self.browser.get(self.url)
+
+    def is_element_present(self, how, what):
+        """Элемент представлен на странице."""
         try:
-            self.browser.find_element(how,what)
-        except (NoSuchElementException):
+            self.browser.find_element(how, what)
+        except NoSuchElementException:
             return False
         return True
-    def go_to_basket(self):
-        self.browser.find_element(*BasePageLocators.BASKET).click()
 
-    def is_not_element_present(self, how, what, timeout=4): #проверка на ОТСУТСВИЕ элемента на странице
+    def is_not_element_present(self, how, what, timeout=4):
         try:
-            WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located((how, what)))
+            WebDriverWait(self.browser, timeout).until(
+                EC.presence_of_element_located((how, what))
+            )
         except TimeoutException:
             return True
         return False
-    def is_disappeared(self, how, what, timeout=4): #проверка на исчезание элемента
+
+    def is_disappeared(self, how, what, timeout=4):
+        """Элемент исчезает со страницы."""
         try:
-            WebDriverWait(self.browser, timeout, 1, TimeoutException).until_not(EC.presence_of_element_located((how, what)))
+            WebDriverWait(self.browser, timeout, 1, TimeoutException).until_not(
+                EC.presence_of_element_located((how, what))
+            )
         except TimeoutException:
             return False
         return True
 
     def should_be_authorized_user(self):
-        assert self.is_element_present(*BasePageLocators.USER_ICON), "User icon is not presented," \
-                                                                     " probably unauthorised user"
+        assert self.is_element_present(*BasePageLocators.USER_ICON), (
+            "User icon is not presented," " probably unauthorised user"
+        )
+
     def solve_quiz_and_get_code(self):
+        """Вычисление проверочного кода из задания в алерте при
+            добавлении товара в корзину."""
         alert = self.browser.switch_to.alert
         x = alert.text.split(" ")[2]
         answer = str(math.log(abs((12 * math.sin(float(x))))))
