@@ -10,11 +10,11 @@
   ```
   git clone https://github.com/ddr533/Selenium_webdriver_tester
   ```
-* Cоздать и активировать виртуальное окружение:
+* Cоздать и активировать виртуальное окружение на Windows:
 
 ```
 python -m venv env
-source env/scripts/activate
+env/scripts/activate
 ```
 
 * Установить зависимости из файла requirements.txt:
