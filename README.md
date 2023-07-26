@@ -1,22 +1,25 @@
 # Selenium_webdriver_tester
-Автоматизация тестирования интернет-магазина.
+Автоматизация тестирования интернет-магазина при помощи фреймворка Selenium Webdriver и паттерна Page Object.
 
 #### Технологии
-* Selenium == 4.3.0
-* Pytest == 7.1.2
+* Selenium==4.3.0
+* Pytest==7.1.2
 
 #### Установка
 * Клонировать репозиторий
   ```
-  git clone https://github.com/ddr533/Selenium_webdriver_tester
+  git clone https://github.com/ddr533/Selenium_webdriver_tester  
   ```
+* Перейти в папку с репозиторием
+```
+cd Selenium_webdriver_tester
+```
 * Cоздать и активировать виртуальное окружение на Windows:
 
 ```
 python -m venv env
 env/scripts/activate
 ```
-
 * Установить зависимости из файла requirements.txt:
 ```
 pip install -r requirements.txt
@@ -31,3 +34,6 @@ pip install -r requirements.txt
 pytest -v -s --tb=line --browser_name=chrome --language=en test_main_page.py
 pytest -v -s --tb=line --browser_name=chrome --language=en test_product_page.py
 ```
+
+#### Автор
+Andrey D.
